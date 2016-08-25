@@ -2,9 +2,11 @@
 # ROS imports
 import rospy
 from std_msgs.msg import String
+from std_msgs.msg import Header
+
+import serial
 
 def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
 
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
@@ -20,6 +22,27 @@ if __name__ == '__main__':
     # Parameters
     port = rospy.get_param('~port','/dev/ttyUSB0')
     rospy.loginfo("%s"%port)
+
+    ser = serial.Serial(port,9600,timeout=1.0)
+
+    pub = rospy.Publisher('rfid', String, queue_size=10)
+
+    msg = String()
+    
+
+    while True:
+        x = ser.read(16)
+        #print type(x)
+        #print len(x)
+
+        if len(x)==16:
+            rfid = ""
+            for xx in x:
+                rfid += "%d:"%ord(xx)
+            rfid = rfid[:-1]
+            rospy.loginfo(rfid)
+            msg.data = rfid
+            pub.publish(rfid)
 
     try:
         talker()
