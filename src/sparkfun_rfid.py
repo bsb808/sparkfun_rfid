@@ -6,17 +6,7 @@ from std_msgs.msg import Header
 
 import serial
 
-def talker():
-
-    rate = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
-        hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
-        rate.sleep()
-
-if __name__ == '__main__':
-    
+def rfidnode():
     rospy.init_node('talker', anonymous=True)
     
     # Parameters
@@ -29,7 +19,6 @@ if __name__ == '__main__':
 
     msg = String()
     
-
     while True:
         x = ser.read(16)
         #print type(x)
@@ -44,7 +33,11 @@ if __name__ == '__main__':
             msg.data = rfid
             pub.publish(rfid)
 
+
+if __name__ == '__main__':
+    
+
     try:
-        talker()
+        rfidnode()
     except rospy.ROSInterruptException:
         pass

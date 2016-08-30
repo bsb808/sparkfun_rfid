@@ -1,1 +1,1 @@
-rosrun sparkfun_rfid sparkfun_rfid.py _port:=/dev/ttyS0
+rosrun sparkfun_rfid sparkfun_rfid.py _port:=/dev/ttyUSB0

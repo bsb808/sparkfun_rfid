@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="port" default="/dev/ttyUSB0"/>
+  <node name="sparkfun_rfid" pkg="sparkfun_rfid" type="sparkfun_rfid.py" output="screen">
+    <param name="port" value="$(arg port)" />
+  </node>
+</launch>
